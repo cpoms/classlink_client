@@ -65,7 +65,7 @@ module ClassLink
         limit = 200
         response_size = nil
 
-        until response_size&.zero? do
+        until response_size&.< limit
           url.query = "limit=#{limit}&offset=#{offset}"
           req = Net::HTTP::Get.new(url.request_uri)
           req["Authorization"] = header
