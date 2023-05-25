@@ -60,14 +60,29 @@ module ClassLink
       end
 
       def get(url, header)
-        req = Net::HTTP::Get.new(url.request_uri)
-        req["Authorization"] = header
+        all = []
+        offset = 0
+        limit = 200
+        response_size = nil
 
-        http = Net::HTTP.new(url.hostname, url.port)
-        http.use_ssl = true
-        res = http.request(req)
+        until response_size&.zero? do
+          url.query = "limit=#{limit}&offset=#{offset}"
+          req = Net::HTTP::Get.new(url.request_uri)
+          req["Authorization"] = header
+          http = Net::HTTP.new(url.hostname, url.port)
+          http.use_ssl = true
 
-        Response.new(res)
+          response = Response.new(http.request(req))
+
+          response_size = response.size
+
+          if response_size.positive?
+            all.concat(response)
+            offset += limit
+          end
+        end
+
+        all
       end
   end
 end
