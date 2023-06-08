@@ -1,5 +1,6 @@
 require "net/https"
 require "base64"
+require "rack/utils"
 require_relative "response"
 
 module ClassLink
@@ -66,7 +67,9 @@ module ClassLink
         response_size = nil
 
         until response_size&.< limit
-          url.query = "limit=#{limit}&offset=#{offset}"
+          url.query = Rack::Utils.parse_query(url.query)
+            .merge(limit: limit, offset: offset)
+            .to_query
           req = Net::HTTP::Get.new(url.request_uri)
           req["Authorization"] = header
           http = Net::HTTP.new(url.hostname, url.port)

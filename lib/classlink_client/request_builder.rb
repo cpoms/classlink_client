@@ -1,5 +1,3 @@
-# require "rack"
-
 module ClassLink
   class RequestBuilder
     include Interface
