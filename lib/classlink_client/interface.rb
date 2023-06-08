@@ -5,13 +5,13 @@ module ClassLink
     RESOURCES = %w(
       demographics
       resources
-      academic_sessions
+      academicSessions
       classes
       courses
       enrollments
       orgs
       users
-      grading_periods
+      gradingPeriods
       schools
       students
       teachers
