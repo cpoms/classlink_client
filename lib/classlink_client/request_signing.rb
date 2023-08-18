@@ -63,7 +63,7 @@ module ClassLink
       def get(url, header)
         all = []
         offset = 0
-        limit = 200
+        limit = 2000
         response_size = nil
 
         until response_size&.< limit
