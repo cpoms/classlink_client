@@ -68,8 +68,9 @@ module ClassLink
 
         until response_size&.< limit
           url.query = Rack::Utils.parse_query(url.query)
-            .merge(limit: limit, offset: offset)
+            .merge("limit" => limit, "offset" => offset)
             .to_query
+
           req = Net::HTTP::Get.new(url.request_uri)
           req["Authorization"] = header
           http = Net::HTTP.new(url.hostname, url.port)
