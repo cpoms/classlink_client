@@ -39,6 +39,7 @@ module ClassLink
 
     def build_url
       URI.join(base_url, *@path_parts).tap do |url|
+        url.path = url.path[..-2]
         url.query = @query.to_query
       end
     end
